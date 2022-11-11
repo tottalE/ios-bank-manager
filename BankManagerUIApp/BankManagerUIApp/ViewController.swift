@@ -13,6 +13,15 @@ class ViewController: UIViewController {
         static let resetButtonText = "초기화"
     }
     
+    let buttonStackView: UIStackView = {
+        let buttonStackView = UIStackView()
+        buttonStackView.axis = .horizontal
+        buttonStackView.distribution = .fillEqually
+        buttonStackView.alignment = .center
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        return buttonStackView
+    }()
+    
     let customerAddButton: UIButton = {
         let customerAddButton = UIButton()
         customerAddButton.setTitle(Constant.customerAddButtonText, for: .normal)
@@ -31,22 +40,22 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         view.backgroundColor = .white
-        view.addSubview(customerAddButton)
-        view.addSubview(resetButton)
+        setupView()
         setupButtonConstraint()
+    }
+    
+    func setupView() {
+        view.addSubview(buttonStackView)
+        buttonStackView.addArrangedSubview(customerAddButton)
+        buttonStackView.addArrangedSubview(resetButton)
     }
 
     func setupButtonConstraint() {
         NSLayoutConstraint.activate([
-            customerAddButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            customerAddButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 30)
-        ])
-        
-        NSLayoutConstraint.activate([
-            resetButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            resetButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -30)
+            buttonStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            buttonStackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            buttonStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
         ])
     }
 
