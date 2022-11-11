@@ -20,28 +20,6 @@ class ViewController: UIViewController {
     var timer = Timer()
     var (minutes, seconds, milliseconds) = (0, 0, 0)
     
-    func startTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(self.keepTimer), userInfo: nil, repeats: true)
-    }
-    
-    @objc func keepTimer() {
-        milliseconds += 1
-        seconds = (milliseconds/1000)%60
-        minutes = seconds/60
-        
-        let minuteStr = String(format:"%2.2d", minutes)
-        let secondStr = String(format:"%2.2d", seconds)
-        let millisecondsStr = String(format:"%3.3d", milliseconds%1000)
-        
-        timeLabel.text = Constant.workingTimeLabelText + minuteStr + ":" + secondStr + ":" + millisecondsStr
-    }
-    
-    @objc func resetTimer() {
-        timer.invalidate()
-        (minutes, seconds, milliseconds) = (0, 0, 0)
-        timeLabel.text = Constant.workingTimeLabelText + Constant.timerStartingTimeText
-    }
-    
     var timeLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -150,6 +128,28 @@ class ViewController: UIViewController {
             lineLabelStackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             lineLabelStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
         ])
+    }
+    
+    func startTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(self.keepTimer), userInfo: nil, repeats: true)
+    }
+    
+    @objc func keepTimer() {
+        milliseconds += 1
+        seconds = (milliseconds/1000)%60
+        minutes = seconds/60
+        
+        let minuteStr = String(format:"%2.2d", minutes)
+        let secondStr = String(format:"%2.2d", seconds)
+        let millisecondsStr = String(format:"%3.3d", milliseconds%1000)
+        
+        timeLabel.text = Constant.workingTimeLabelText + minuteStr + ":" + secondStr + ":" + millisecondsStr
+    }
+    
+    @objc func resetTimer() {
+        timer.invalidate()
+        (minutes, seconds, milliseconds) = (0, 0, 0)
+        timeLabel.text = Constant.workingTimeLabelText + Constant.timerStartingTimeText
     }
 }
 
