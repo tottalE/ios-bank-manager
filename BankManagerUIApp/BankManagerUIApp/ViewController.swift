@@ -173,7 +173,10 @@ class ViewController: UIViewController {
     }
     
     @objc func customerAddButtonPressed() {
-        startTimer()
+        if !timer.isValid {
+            startTimer()
+        }
+        
         bankManager.start()
     }
 }
