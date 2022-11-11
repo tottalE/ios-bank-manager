@@ -24,7 +24,13 @@ class ViewController: UIViewController {
         let secondStr = String(format:"%2.2d", seconds)
         let millisecondsStr = String(format:"%3.3d", milliseconds%1000)
         
-        timeLabel.text = "업무시간 - " + minuteStr + ":" + secondStr + ":" + millisecondsStr
+        timeLabel.text = Constant.workingTimeLabelText + minuteStr + ":" + secondStr + ":" + millisecondsStr
+    }
+    
+    @objc func resetTimer() {
+        timer.invalidate()
+        (minutes, seconds, milliseconds) = (0, 0, 0)
+        timeLabel.text = Constant.workingTimeLabelText + Constant.timerStartingTimeText
     }
     
     enum Constant {
@@ -32,6 +38,8 @@ class ViewController: UIViewController {
         static let resetButtonText = "초기화"
         static let waitingLabelText = "대기중"
         static let processingLableText = "업무중"
+        static let workingTimeLabelText = "업무시간 - "
+        static let timerStartingTimeText = "00:00:000"
     }
     
     var timeLabel: UILabel = {
@@ -39,7 +47,7 @@ class ViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 19, weight: UIFont.Weight.regular)
-        label.text = "00:00:000"
+        label.text = Constant.timerStartingTimeText
         return label
     }()
     
@@ -74,6 +82,7 @@ class ViewController: UIViewController {
         resetButton.setTitle(Constant.resetButtonText, for: .normal)
         resetButton.setTitleColor(.systemRed, for: .normal)
         resetButton.translatesAutoresizingMaskIntoConstraints = false
+        resetButton.addTarget(self, action: #selector(resetTimer), for: .touchUpInside)
         return resetButton
     }()
     
