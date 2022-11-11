@@ -20,9 +20,9 @@ class ViewController: UIViewController {
         seconds = (milliseconds/1000)%60
         minutes = seconds/60
         
-        let minuteStr = String(format:"%02d", minutes)
-        let secondStr = String(format:"%02d", seconds)
-        let millisecondsStr = String(format:"%03d", milliseconds%1000)
+        let minuteStr = String(format:"%2.2d", minutes)
+        let secondStr = String(format:"%2.2d", seconds)
+        let millisecondsStr = String(format:"%3.3d", milliseconds%1000)
         
         timeLabel.text = "업무시간 - " + minuteStr + ":" + secondStr + ":" + millisecondsStr
     }
@@ -38,7 +38,7 @@ class ViewController: UIViewController {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.font = .preferredFont(forTextStyle: .title2)
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 19, weight: UIFont.Weight.regular)
         label.text = "00:00:000"
         return label
     }()
