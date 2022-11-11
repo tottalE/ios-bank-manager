@@ -37,4 +37,8 @@ struct BankManager {
             bank.customerQueue.enqueue(Customer(number: number, serviceType: serviceType))
         }
     }
+    
+    mutating func reset() {
+        bank = Bank(clerkCount: 3, loanClerkCount: 1)
+    }
 }
