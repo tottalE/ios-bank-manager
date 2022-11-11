@@ -23,12 +23,8 @@ struct Bank {
     }
     
     func open() {
-        let startTime = CFAbsoluteTimeGetCurrent()
         manageCustomerQueue()
         serve()
-        let endTime = CFAbsoluteTimeGetCurrent()
-        let timeInterval = endTime - startTime
-        endWork(timeInterval)
     }
     
     func manageCustomerQueue() {
@@ -56,7 +52,9 @@ struct Bank {
             }
         }
 
-        group.wait()
+        group.notify(queue: .main) {
+            print("모든 작업이 끝났습니다.")
+        }
     }
     
     func close() {}
