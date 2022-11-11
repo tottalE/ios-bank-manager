@@ -62,7 +62,7 @@ class ViewController: UIViewController {
         resetButton.setTitle(Constant.resetButtonText, for: .normal)
         resetButton.setTitleColor(.systemRed, for: .normal)
         resetButton.translatesAutoresizingMaskIntoConstraints = false
-        resetButton.addTarget(self, action: #selector(resetTimer), for: .touchUpInside)
+        resetButton.addTarget(self, action: #selector(resetButtonPressed), for: .touchUpInside)
         return resetButton
     }()
     
@@ -156,7 +156,12 @@ class ViewController: UIViewController {
         timeLabel.text = Constant.workingTimeLabelText + minuteStr + ":" + secondStr + ":" + millisecondsStr
     }
     
-    @objc func resetTimer() {
+    @objc func resetButtonPressed() {
+        resetTimer()
+        bankManager.reset()
+    }
+    
+    func resetTimer() {
         timer.invalidate()
         (minutes, seconds, milliseconds) = (0, 0, 0)
         timeLabel.text = Constant.workingTimeLabelText + Constant.timerStartingTimeText
