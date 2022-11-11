@@ -8,6 +8,15 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    enum Constant {
+        static let customerAddButtonText = "고객 10명 추가"
+        static let resetButtonText = "초기화"
+        static let waitingLabelText = "대기중"
+        static let processingLableText = "업무중"
+        static let workingTimeLabelText = "업무시간 - "
+        static let timerStartingTimeText = "00:00:000"
+    }
+    
     var timer = Timer()
     var (minutes, seconds, milliseconds) = (0, 0, 0)
     
@@ -31,15 +40,6 @@ class ViewController: UIViewController {
         timer.invalidate()
         (minutes, seconds, milliseconds) = (0, 0, 0)
         timeLabel.text = Constant.workingTimeLabelText + Constant.timerStartingTimeText
-    }
-    
-    enum Constant {
-        static let customerAddButtonText = "고객 10명 추가"
-        static let resetButtonText = "초기화"
-        static let waitingLabelText = "대기중"
-        static let processingLableText = "업무중"
-        static let workingTimeLabelText = "업무시간 - "
-        static let timerStartingTimeText = "00:00:000"
     }
     
     var timeLabel: UILabel = {
