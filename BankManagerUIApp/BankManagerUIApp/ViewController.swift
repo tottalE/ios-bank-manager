@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.font = UIFont.monospacedDigitSystemFont(ofSize: 19, weight: UIFont.Weight.regular)
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFont.Weight.medium)
         label.text = Constant.timerStartingTimeText
         return label
     }()
@@ -118,7 +118,8 @@ class ViewController: UIViewController {
         NSLayoutConstraint.activate([
             timeLabel.topAnchor.constraint(equalTo: buttonStackView.bottomAnchor),
             timeLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-            timeLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
+            timeLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            timeLabel.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
