@@ -4,7 +4,7 @@
 //
 //  Created by Aaron, tottale on 11/3/22.
 //
-import Foundation
+import UIKit
 
 struct Bank {
     var clerks: [Workable]
@@ -53,7 +53,7 @@ struct Bank {
         }
 
         group.notify(queue: .main) {
-            print("모든 작업이 끝났습니다.")
+            NotificationCenter.default.post(name: Notification.Name("WorkEnded"), object: nil)
         }
     }
     

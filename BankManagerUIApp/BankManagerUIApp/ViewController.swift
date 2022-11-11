@@ -91,11 +91,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setupNotificationCenter()
         setupView()
-        startTimer()
         setupButtonConstraint()
         setUpTimeConstraint()
         setupLineLabelConstraint()
+    }
+    
+    func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(stopTimer),
+                                               name: NSNotification.Name("WorkEnded"),
+                                               object: nil)
     }
     
     func setupView() {
@@ -155,7 +162,12 @@ class ViewController: UIViewController {
         timeLabel.text = Constant.workingTimeLabelText + Constant.timerStartingTimeText
     }
     
+    @objc func stopTimer() {
+        timer.invalidate()
+    }
+    
     @objc func customerAddButtonPressed() {
+        startTimer()
         bankManager.start()
     }
 }
