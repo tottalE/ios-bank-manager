@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     
     var timer = Timer()
     var (minutes, seconds, milliseconds) = (0, 0, 0)
+    var bankManager = BankManager()
     
     var timeLabel: UILabel = {
         var label = UILabel()
@@ -52,6 +53,7 @@ class ViewController: UIViewController {
         customerAddButton.setTitle(Constant.customerAddButtonText, for: .normal)
         customerAddButton.setTitleColor(.systemBlue, for: .normal)
         customerAddButton.translatesAutoresizingMaskIntoConstraints = false
+        customerAddButton.addTarget(self, action: #selector(customerAddButtonPressed), for: .touchUpInside)
         return customerAddButton
     }()
     
@@ -151,6 +153,10 @@ class ViewController: UIViewController {
         timer.invalidate()
         (minutes, seconds, milliseconds) = (0, 0, 0)
         timeLabel.text = Constant.workingTimeLabelText + Constant.timerStartingTimeText
+    }
+    
+    @objc func customerAddButtonPressed() {
+        bankManager.start()
     }
 }
 

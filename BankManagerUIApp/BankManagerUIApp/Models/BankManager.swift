@@ -9,24 +9,9 @@ struct BankManager {
     
     var bank: Bank = Bank(clerkCount: 3, loanClerkCount: 1)
 
-    func printMenu() {
-        print("1: 은행 개점")
-        print("2: 종료")
-        print("입력: ", terminator: "")
-    }
-
     mutating func start() {
-        printMenu()
-        let menuNumber = readLine()
-        switch menuNumber {
-        case "1":
-            setupRandomCustomerQueue()
-            bank.open()
-        case "2":
-            bank.close()
-        default:
-            start()
-        }
+        setupTenCustomerQueue()
+        bank.open()
     }
 
     mutating func setupRandomCustomerQueue() {
@@ -37,6 +22,19 @@ struct BankManager {
                 return
             }
             bank.customerQueue.enqueue(Customer(number: index+1, serviceType: serviceType))
+        }
+    }
+    
+    mutating func setupTenCustomerQueue() {
+        let previousCustomerCount = bank.customerCount
+        bank.customerCount += 10
+        let currentCustomerCount = bank.customerCount
+        
+        (previousCustomerCount+1...currentCustomerCount).forEach { number in
+            guard let serviceType = Service.allCases.randomElement() else {
+                return
+            }
+            bank.customerQueue.enqueue(Customer(number: number, serviceType: serviceType))
         }
     }
 }
