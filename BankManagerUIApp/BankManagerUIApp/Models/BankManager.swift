@@ -8,6 +8,7 @@
 struct BankManager {
     
     var bank: Bank = Bank(clerkCount: 3, loanClerkCount: 1)
+    var delegate: CustomerQueueDelegate?
 
     mutating func start() {
         setupTenCustomerQueue()
@@ -34,7 +35,9 @@ struct BankManager {
             guard let serviceType = Service.allCases.randomElement() else {
                 return
             }
-            bank.customerQueue.enqueue(Customer(number: number, serviceType: serviceType))
+            let customer = Customer(number: number, serviceType: serviceType)
+            delegate?.customerQueueDidChange(customer: customer)
+            bank.customerQueue.enqueue(customer)
         }
     }
     

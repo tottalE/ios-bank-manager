@@ -91,6 +91,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        bankManager.delegate = self
         setupNotificationCenter()
         setupView()
         setupButtonConstraint()
@@ -177,3 +178,9 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController: CustomerQueueDelegate {
+    func customerQueueDidChange(customer: Customer) {
+        let customerLabel = CustomerLabel(customer)
+        view.addSubview(customerLabel)
+    }
+}
