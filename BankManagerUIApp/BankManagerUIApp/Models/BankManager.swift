@@ -36,7 +36,7 @@ struct BankManager {
                 return
             }
             let customer = Customer(number: number, serviceType: serviceType)
-            delegate?.customerQueueDidChange(customer: customer)
+            delegate?.addVC(of: customer)
             bank.customerQueue.enqueue(customer)
         }
     }

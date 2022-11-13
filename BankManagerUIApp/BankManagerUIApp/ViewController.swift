@@ -114,17 +114,23 @@ class ViewController: UIViewController {
         return processingScrollView
     }()
     
-    private let waitingContentView: UIView = {
-        let view = UIView()
+    private let waitingStackView: UIStackView = {
+        let view = UIStackView()
+        view.spacing = 10
+        view.axis = .vertical
+        view.distribution = .fill
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .white
         return view
     }()
     
-    private let processingContentView: UIView = {
-        let view = UIView()
+    private let processingStackView: UIStackView = {
+        let view = UIStackView()
+        view.spacing = 10
+        view.axis = .vertical
+        view.distribution = .fill
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .white
         return view
     }()
     
@@ -162,8 +168,8 @@ class ViewController: UIViewController {
         scrollStackView.addArrangedSubview(waitingScrollView)
         scrollStackView.addArrangedSubview(processingScrollView)
         
-        waitingScrollView.addSubview(waitingContentView)
-        processingScrollView.addSubview(processingContentView)
+        waitingScrollView.addSubview(waitingStackView)
+        processingScrollView.addSubview(processingStackView)
         
         /*
          contentView.addSubView(customerLabel)
@@ -189,7 +195,7 @@ class ViewController: UIViewController {
     }
     
     func setupLineLabelConstraint() {
-        UIKit.NSLayoutConstraint.activate([
+        NSLayoutConstraint.activate([
             lineLabelStackView.topAnchor.constraint(equalTo: timeLabel.bottomAnchor),
             lineLabelStackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             lineLabelStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
@@ -204,17 +210,17 @@ class ViewController: UIViewController {
             scrollStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             scrollStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
-            waitingContentView.topAnchor.constraint(equalTo: waitingScrollView.topAnchor),
-            waitingContentView.leadingAnchor.constraint(equalTo: waitingScrollView.leadingAnchor),
-            waitingContentView.trailingAnchor.constraint(equalTo: waitingScrollView.trailingAnchor),
-            waitingContentView.bottomAnchor.constraint(equalTo: waitingScrollView.bottomAnchor),
-            waitingContentView.widthAnchor.constraint(equalTo: waitingScrollView.widthAnchor),
+            waitingStackView.topAnchor.constraint(equalTo: waitingScrollView.topAnchor),
+            waitingStackView.leadingAnchor.constraint(equalTo: waitingScrollView.leadingAnchor),
+            waitingStackView.trailingAnchor.constraint(equalTo: waitingScrollView.trailingAnchor),
+            waitingStackView.bottomAnchor.constraint(equalTo: waitingScrollView.bottomAnchor),
+            waitingStackView.widthAnchor.constraint(equalTo: waitingScrollView.widthAnchor),
             
-            processingContentView.topAnchor.constraint(equalTo: processingContentView.topAnchor),
-            processingContentView.leadingAnchor.constraint(equalTo: processingContentView.leadingAnchor),
-            processingContentView.trailingAnchor.constraint(equalTo: processingContentView.trailingAnchor),
-            processingContentView.bottomAnchor.constraint(equalTo: processingContentView.bottomAnchor),
-            processingContentView.widthAnchor.constraint(equalTo: processingScrollView.widthAnchor)
+            processingStackView.topAnchor.constraint(equalTo: processingStackView.topAnchor),
+            processingStackView.leadingAnchor.constraint(equalTo: processingStackView.leadingAnchor),
+            processingStackView.trailingAnchor.constraint(equalTo: processingStackView.trailingAnchor),
+            processingStackView.bottomAnchor.constraint(equalTo: processingStackView.bottomAnchor),
+            processingStackView.widthAnchor.constraint(equalTo: processingScrollView.widthAnchor)
         ])
     }
 
@@ -260,8 +266,15 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: CustomerQueueDelegate {
-    func customerQueueDidChange(customer: Customer) {
+    func addVC(of customer: Customer) {
         let customerLabel = CustomerLabel(customer)
-        waitingContentView.addSubview(customerLabel)
+        
+        NSLayoutConstraint.activate([
+            customerLabel.heightAnchor.constraint(equalToConstant: 20),
+            customerLabel.widthAnchor.constraint(equalToConstant: 60)
+        ])
+        
+        waitingStackView.addArrangedSubview(customerLabel)
     }
 }
+

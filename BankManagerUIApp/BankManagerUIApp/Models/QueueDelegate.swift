@@ -4,7 +4,8 @@
 //
 //  Created by jin on 11/11/22.
 //
+import UIKit
 
 protocol CustomerQueueDelegate {
-    func customerQueueDidChange(customer: Customer)
+    func addVC(of customer: Customer)
 }
