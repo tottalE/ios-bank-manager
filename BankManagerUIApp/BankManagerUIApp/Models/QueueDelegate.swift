@@ -7,5 +7,5 @@
 import UIKit
 
 protocol CustomerQueueDelegate {
-    func addVC(of customer: Customer)
+    func addView(of customer: Customer)
 }

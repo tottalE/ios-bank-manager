@@ -115,23 +115,23 @@ class ViewController: UIViewController {
     }()
     
     private let waitingStackView: UIStackView = {
-        let view = UIStackView()
-        view.spacing = 10
-        view.axis = .vertical
-        view.distribution = .fill
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        return view
+        let waitingStackView = UIStackView()
+        waitingStackView.spacing = 10
+        waitingStackView.axis = .vertical
+        waitingStackView.distribution = .fill
+        waitingStackView.translatesAutoresizingMaskIntoConstraints = false
+        waitingStackView.backgroundColor = .white
+        return waitingStackView
     }()
     
     private let processingStackView: UIStackView = {
-        let view = UIStackView()
-        view.spacing = 10
-        view.axis = .vertical
-        view.distribution = .fill
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        return view
+        let processingStackView = UIStackView()
+        processingStackView.spacing = 10
+        processingStackView.axis = .vertical
+        processingStackView.distribution = .fill
+        processingStackView.translatesAutoresizingMaskIntoConstraints = false
+        processingStackView.backgroundColor = .white
+        return processingStackView
     }()
     
     override func viewDidLoad() {
@@ -266,7 +266,7 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: CustomerQueueDelegate {
-    func addVC(of customer: Customer) {
+    func addView(of customer: Customer) {
         let customerLabel = CustomerLabel(customer)
         
         NSLayoutConstraint.activate([
