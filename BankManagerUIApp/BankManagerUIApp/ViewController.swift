@@ -87,7 +87,47 @@ class ViewController: UIViewController {
         processingLabel.translatesAutoresizingMaskIntoConstraints = false
         return processingLabel
     }()
-
+    
+    let scrollStackView: UIStackView = {
+        let scrollStackView = UIStackView()
+        scrollStackView.axis = .horizontal
+        scrollStackView.distribution = .fillEqually
+        scrollStackView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollStackView
+    }()
+    
+    private let waitingScrollView: UIScrollView = {
+        let waitingScrollView = UIScrollView()
+        waitingScrollView.translatesAutoresizingMaskIntoConstraints = false
+        waitingScrollView.backgroundColor = .white
+        waitingScrollView.showsVerticalScrollIndicator = false
+        
+        return waitingScrollView
+    }()
+    
+    private let processingScrollView: UIScrollView = {
+        let processingScrollView = UIScrollView()
+        processingScrollView.translatesAutoresizingMaskIntoConstraints = false
+        processingScrollView.backgroundColor = .white
+        processingScrollView.showsVerticalScrollIndicator = false
+        
+        return processingScrollView
+    }()
+    
+    private let waitingContentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
+    private let processingContentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -97,6 +137,7 @@ class ViewController: UIViewController {
         setupButtonConstraint()
         setUpTimeConstraint()
         setupLineLabelConstraint()
+        setUpScrollViewConstraint()
     }
     
     func setupNotificationCenter() {
@@ -110,17 +151,31 @@ class ViewController: UIViewController {
         view.addSubview(buttonStackView)
         view.addSubview(timeLabel)
         view.addSubview(lineLabelStackView)
+        view.addSubview(scrollStackView)
+        
         buttonStackView.addArrangedSubview(customerAddButton)
         buttonStackView.addArrangedSubview(resetButton)
+        
         lineLabelStackView.addArrangedSubview(waitingLabel)
         lineLabelStackView.addArrangedSubview(processingLabel)
+        
+        scrollStackView.addArrangedSubview(waitingScrollView)
+        scrollStackView.addArrangedSubview(processingScrollView)
+        
+        waitingScrollView.addSubview(waitingContentView)
+        processingScrollView.addSubview(processingContentView)
+        
+        /*
+         contentView.addSubView(customerLabel)
+         */
     }
     
     func setupButtonConstraint() {
         NSLayoutConstraint.activate([
             buttonStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             buttonStackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-            buttonStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
+            buttonStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            buttonStackView.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
@@ -134,12 +189,35 @@ class ViewController: UIViewController {
     }
     
     func setupLineLabelConstraint() {
-        NSLayoutConstraint.activate([
+        UIKit.NSLayoutConstraint.activate([
             lineLabelStackView.topAnchor.constraint(equalTo: timeLabel.bottomAnchor),
             lineLabelStackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-            lineLabelStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
+            lineLabelStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            lineLabelStackView.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
+    
+    func setUpScrollViewConstraint() {
+        NSLayoutConstraint.activate([
+            scrollStackView.topAnchor.constraint(equalTo: lineLabelStackView.bottomAnchor),
+            scrollStackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            scrollStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            scrollStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            waitingContentView.topAnchor.constraint(equalTo: waitingScrollView.topAnchor),
+            waitingContentView.leadingAnchor.constraint(equalTo: waitingScrollView.leadingAnchor),
+            waitingContentView.trailingAnchor.constraint(equalTo: waitingScrollView.trailingAnchor),
+            waitingContentView.bottomAnchor.constraint(equalTo: waitingScrollView.bottomAnchor),
+            waitingContentView.widthAnchor.constraint(equalTo: waitingScrollView.widthAnchor),
+            
+            processingContentView.topAnchor.constraint(equalTo: processingContentView.topAnchor),
+            processingContentView.leadingAnchor.constraint(equalTo: processingContentView.leadingAnchor),
+            processingContentView.trailingAnchor.constraint(equalTo: processingContentView.trailingAnchor),
+            processingContentView.bottomAnchor.constraint(equalTo: processingContentView.bottomAnchor),
+            processingContentView.widthAnchor.constraint(equalTo: processingScrollView.widthAnchor)
+        ])
+    }
+
     
     func startTimer() {
         timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(self.keepTimer), userInfo: nil, repeats: true)
@@ -184,6 +262,6 @@ class ViewController: UIViewController {
 extension ViewController: CustomerQueueDelegate {
     func customerQueueDidChange(customer: Customer) {
         let customerLabel = CustomerLabel(customer)
-        view.addSubview(customerLabel)
+        waitingContentView.addSubview(customerLabel)
     }
 }
